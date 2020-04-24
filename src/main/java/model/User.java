@@ -1,8 +1,6 @@
 package model;
 
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
-import org.hibernate.annotations.ValueGenerationType;
 
 import javax.persistence.*;
 import java.io.Serializable;
