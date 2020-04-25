@@ -1,6 +1,5 @@
 package model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,8 +14,10 @@ public class Note implements Serializable {
 
     @Id
     @GeneratedValue
+    @Column(updatable = false)
     private Integer id;
 
+    @Column(nullable = false)
     private String title;
 
     @Column(name = "text_field")

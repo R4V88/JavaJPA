@@ -17,6 +17,7 @@ public class Project implements Serializable {
     @GeneratedValue
     private Integer id;
 
+    @Column(nullable = false)
     private String title;
 
     private String description;

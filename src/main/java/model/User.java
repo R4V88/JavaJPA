@@ -22,12 +22,13 @@ public class User implements Serializable {
 
     private String surname;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String login;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
