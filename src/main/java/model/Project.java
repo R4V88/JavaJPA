@@ -1,11 +1,14 @@
 package model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "projects")
 public class Project implements Serializable {
@@ -21,7 +24,11 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project")
     private List<Note> notes;
 
+    @ManyToOne
+    private User user;
 
-    //TODO
-    //add a private Project field in Note.
+    public Project(String title, String description){
+        this.title = title;
+        this.description = description;
+    }
 }

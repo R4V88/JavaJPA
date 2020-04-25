@@ -25,6 +25,9 @@ public class Note implements Serializable {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Project project;
+
     public Note(String title, String textField) {
         this.title = title;
         this.textField = textField;
