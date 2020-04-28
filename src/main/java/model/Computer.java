@@ -18,28 +18,24 @@ public class Computer {
     @Column(updatable = false)
     private long id;
 
-    @Setter
     @Column(nullable = false)
     private String manufacturer;
 
-    @Setter
     @Column(nullable = false)
     private String processor;
 
-    @Setter
     @Column(nullable = false)
     private String ram;
 
-    @Setter
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Drive drive;
 
-    @Setter
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Builder
     public Computer(String manufacturer, String processor, String ram, Drive drive) {
         this.manufacturer = manufacturer;
         this.processor = processor;
