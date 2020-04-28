@@ -9,6 +9,15 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
+    private static UserDao instance = new UserDaoImpl();
+
+    private UserDaoImpl() {
+    }
+
+    public static UserDao getInstance() {
+        return UserDaoImpl.instance;
+    }
+
     @Override
     public void addUser(EntityManager em, User user) {
         em.persist(user);
