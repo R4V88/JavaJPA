@@ -16,7 +16,7 @@ public class Computer {
     @Id
     @GeneratedValue
     @Column(updatable = false)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String manufacturer;

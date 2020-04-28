@@ -8,15 +8,23 @@ import java.util.List;
 
 public interface ComputerDao {
 
-     List<Computer> getAllComputers(EntityManager em);
+    void createComputer(EntityManager em, Computer computer);
 
-     Computer getComputerById (EntityManager em, Long id);
+    List<Computer> findAllComputers(EntityManager em);
 
-     Computer getComputerByManufacturer(EntityManager em, String manufacturer);
+    List<Computer> findComputerByManufacturer(EntityManager em, String manufacturer);
 
-     Computer getComputerByDrive(EntityManager em, Drive drive);
+    List<Computer> findComputerByDrive(EntityManager em, Drive drive);
 
+    Computer findComputerById(EntityManager em, Long id);
 
+    void updateComputerRamById(EntityManager em, Long id, String ram);
+
+    void updateComputerProcessorById(EntityManager em, Long id, String ram);
+
+    void updateComputerDriveById(EntityManager em, Long id, Drive drive);
+
+    void removeComputerById(EntityManager em, Long id);
 
 
 }
