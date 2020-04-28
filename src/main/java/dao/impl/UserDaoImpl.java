@@ -5,102 +5,95 @@ import model.User;
 import model.enums.Role;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
     @Override
+    public void addUser(EntityManager em, User user) {
+        em.persist(user);
+    }
+
+    @Override
     public List<User> findAllUsers(EntityManager em) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
-
-        criteriaQuery.select(user);
-
-        return em.createQuery(criteriaQuery).getResultList();
+        return em.createQuery("SELECT u FROM User u", User.class)
+                .getResultList();
     }
 
     @Override
     public List<User> findUsersByRole(EntityManager em, Role role) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
-
-        Path<Object> userRole = user.get("role");
-
-        criteriaQuery.select(user).where(builder.equal(userRole, role));
-
-        return em.createQuery(criteriaQuery).getResultList();
-
+        return em.createQuery("SELECT u FROM User u WHERE u.role = :role", User.class)
+                .setParameter("role", role)
+                .getResultList();
     }
 
     @Override
-    public List<User> findUsersByProject(EntityManager em, String projectTitle) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
-
-        Path<Object> project = user.get("project");
-
-        criteriaQuery.select(user).where(builder.equal(project, projectTitle));
-
-        return em.createQuery(criteriaQuery).getResultList();
-    }
-
-    @Override
-    public User findUserById(EntityManager em, long id) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
-
-        Path<Object> userId = user.get("id");
-
-        criteriaQuery.select(user).where(builder.equal(userId, id));
-
-        return em.createQuery(criteriaQuery).getSingleResult();
+    public User findUserById(EntityManager em, Long id) {
+        return em.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     @Override
     public User findUserByLogin(EntityManager em, String login) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
-
-        Path<Object> userLogin = user.get("login");
-
-        criteriaQuery.select(user).where(builder.equal(userLogin, login));
-
-        return em.createQuery(criteriaQuery).getSingleResult();
+        return em.createQuery("SELECT u FROM User u WHERE u.login = :login", User.class)
+                .setParameter("login", login)
+                .getSingleResult();
     }
 
     @Override
     public User findUserByEmail(EntityManager em, String email) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
-
-        Path<Object> userEmail = user.get("email");
-
-        criteriaQuery.select(user).where(builder.equal(userEmail, email));
-
-        return em.createQuery(criteriaQuery).getSingleResult();
+        return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
     }
 
     @Override
     public User findUserByNameAndSurname(EntityManager em, String name, String surname) {
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-        Root<User> user = criteriaQuery.from(User.class);
+        return em.createQuery("SELECT u FROM User u WHERE u.name = :name AND u.surname = :surname", User.class)
+                .setParameter("name", name)
+                .setParameter("surname", surname)
+                .getSingleResult();
+    }
 
-        Path<Object> userName = user.get("name");
-        Path<Object> userSurname = user.get("surname");
+    @Override
+    public void updateUserNameById(EntityManager em, String name, Long id) {
+        em.createQuery("UPDATE User u SET u.name = :name WHERE u.id = :id")
+                .setParameter("name", name)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 
-        criteriaQuery.select(user).where(builder.and(builder.equal(userName, name), builder.equal(userSurname, surname)));
+    @Override
+    public void updateUserSurnameById(EntityManager em, String surname, Long id) {
+        em.createQuery("UPDATE User u SET u.surname = :surname WHERE u.id = :id")
+                .setParameter("surname", surname)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 
-        return em.createQuery(criteriaQuery).getSingleResult();
+    @Override
+    public void updateUserUserLoginById(EntityManager em, String login, Long id) {
+        em.createQuery("UPDATE User u SET u.login = :login WHERE u.id = :id")
+                .setParameter("login", login)
+                .setParameter("id", id)
+                .executeUpdate();
+
+    }
+
+    @Override
+    public void updateUserPasswordById(EntityManager em, String password, Long id) {
+        em.createQuery("UPDATE User u SET u.password = :password WHERE u.id = :id")
+                .setParameter("password", password)
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public void updateUserEmailById(EntityManager em, String email, Long id) {
+        em.createQuery("UPDATE User u SET u.email = :email WHERE u.id = :id")
+                .setParameter("email", email)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }
