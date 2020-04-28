@@ -2,13 +2,14 @@ package model.dao;
 
 import model.Project;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface ProjectDao {
 
-    public List<Project> getAllProjects();
+    public List<Project> getAllProjects(EntityManager em);
 
-    public Project getProjectById(long id);
+    public Project getProjectById(EntityManager em, Long id);
 
-    public Project getProjectByTitle(String title);
+    public Project getProjectByTitle(EntityManager em, String title);
 }
