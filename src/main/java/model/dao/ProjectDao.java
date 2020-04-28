@@ -15,9 +15,9 @@ public interface ProjectDao {
 
     public Project findProjectByTitle(EntityManager em, String title);
 
-    void updateProjectTitleById(EntityManager em, String title);
+    void updateProjectTitleById(EntityManager em, String title, Long id);
 
-    void updateProjectDescriptionById(EntityManager em, String description);
+    void updateProjectDescriptionById(EntityManager em, String description, Long id);
 
     void removeProjectById(EntityManager em, Long id);
 }

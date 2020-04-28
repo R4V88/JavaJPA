@@ -47,17 +47,25 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public void updateProjectTitleById(EntityManager em, String title) {
-
+    public void updateProjectTitleById(EntityManager em, String title, Long id) {
+        em.createQuery("UPDATE Project p SET p.title = :title WHERE p.id = :id")
+                .setParameter("title", title)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override
-    public void updateProjectDescriptionById(EntityManager em, String description) {
-
+    public void updateProjectDescriptionById(EntityManager em, String description, Long id) {
+        em.createQuery("UPDATE Project p SET p.description = :description WHERE p.id = :id")
+                .setParameter("description", description)
+                .setParameter("id", id)
+                .executeUpdate();
     }
 
     @Override
     public void removeProjectById(EntityManager em, Long id) {
-
+        em.createQuery("DELETE FROM Computer c WHERE c.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }
