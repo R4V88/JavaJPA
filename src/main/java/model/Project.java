@@ -22,11 +22,11 @@ public class Project implements Serializable {
 
     private String description;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Note> notes;
 
-    @ManyToOne
-    private User user;
+    @ManyToMany
+    private List<User> users;
 
     public Project(String title, String description){
         this.title = title;

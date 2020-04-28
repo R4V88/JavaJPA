@@ -24,6 +24,7 @@ public class Note implements Serializable {
     private String textField;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne

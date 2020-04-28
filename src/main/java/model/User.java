@@ -34,11 +34,14 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Note> notes;
 
-    @OneToMany (mappedBy = "user")
+    @ManyToMany(mappedBy = "users",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Project> projects;
+
+    @OneToOne
+    private Computer computer;
 
     public User(String name, String surname, String login, String email, String password, Role role) {
         this.name = name;
