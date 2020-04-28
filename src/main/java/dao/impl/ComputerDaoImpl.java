@@ -39,7 +39,7 @@ public class ComputerDaoImpl implements ComputerDao {
     @Override
     public List<Computer> findComputerByDrive(EntityManager em, Drive drive) {
         return em
-                .createQuery("SELECT c FROM Computer c WHERE c.drive = :drive")
+                .createQuery("SELECT c FROM Computer c WHERE c.drive = :drive", Computer.class)
                 .setParameter("drive", drive)
                 .getResultList();
     }
