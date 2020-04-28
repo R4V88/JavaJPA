@@ -7,9 +7,17 @@ import java.util.List;
 
 public interface ProjectDao {
 
-    public List<Project> getAllProjects(EntityManager em);
+    void createProject(EntityManager em, Project project);
 
-    public Project getProjectById(EntityManager em, Long id);
+    public List<Project> findAllProjects(EntityManager em);
 
-    public Project getProjectByTitle(EntityManager em, String title);
+    public Project findProjectById(EntityManager em, Long id);
+
+    public Project findProjectByTitle(EntityManager em, String title);
+
+    void updateProjectTitleById(EntityManager em, String title);
+
+    void updateProjectDescriptionById(EntityManager em, String description);
+
+    void removeProjectById(EntityManager em, Long id);
 }

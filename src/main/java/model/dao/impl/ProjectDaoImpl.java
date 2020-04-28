@@ -19,14 +19,19 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public List<Project> getAllProjects(EntityManager em) {
+    public void createProject(EntityManager em, Project project) {
+        em.persist(project);
+    }
+
+    @Override
+    public List<Project> findAllProjects(EntityManager em) {
         TypedQuery<Project> query = em.createQuery("SELECT p FROM Project p", Project.class);
 
         return query.getResultList();
     }
 
     @Override
-    public Project getProjectById(EntityManager em, Long id) {
+    public Project findProjectById(EntityManager em, Long id) {
         TypedQuery<Project> query = em.createQuery("SELECT p FROM Project p WHERE p.id = ?1", Project.class);
         query.setParameter(1, id);
 
@@ -34,10 +39,25 @@ public class ProjectDaoImpl implements ProjectDao {
     }
 
     @Override
-    public Project getProjectByTitle(EntityManager em, String title) {
+    public Project findProjectByTitle(EntityManager em, String title) {
         return em
                 .createQuery("SELECT p FROM Project p where p.title = :title", Project.class)
                 .setParameter("title", title)
                 .getSingleResult();
+    }
+
+    @Override
+    public void updateProjectTitleById(EntityManager em, String title) {
+
+    }
+
+    @Override
+    public void updateProjectDescriptionById(EntityManager em, String description) {
+
+    }
+
+    @Override
+    public void removeProjectById(EntityManager em, Long id) {
+
     }
 }
