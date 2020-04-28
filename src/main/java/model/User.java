@@ -8,14 +8,17 @@ import java.io.Serializable;
 import java.util.List;
 
 
-@Data
+@Getter
 @NoArgsConstructor
+@ToString(exclude = {"notes", "projects", "computer"})
+@EqualsAndHashCode(exclude = {"notes", "projects", "computer"})
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
 
     @Id
     @GeneratedValue
+    @Column(updatable = false)
     private Integer id;
 
     private String name;
@@ -34,15 +37,19 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Note> notes;
 
-    @ManyToMany(mappedBy = "users",  cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Project> projects;
-
-    @OneToOne
+    @OneToOne(mappedBy = "user")
     private Computer computer;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "users_projects",
+            joinColumns = @JoinColumn(name = "user"),
+            inverseJoinColumns = @JoinColumn(name = "project"))
+    private List<Project> projects;
+
+    @Builder
     public User(String name, String surname, String login, String email, String password, Role role) {
         this.name = name;
         this.surname = surname;

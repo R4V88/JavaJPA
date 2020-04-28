@@ -1,35 +1,49 @@
 package model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import model.enums.Drive;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Data
+@Getter
 @NoArgsConstructor
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user")
 @Entity
 @Table(name = "computers")
-public class Computer implements Serializable {
+public class Computer {
 
     @Id
     @GeneratedValue
+    @Column(updatable = false)
     private long id;
 
+    @Setter
+    @Column(nullable = false)
     private String manufacturer;
+
+    @Setter
+    @Column(nullable = false)
     private String processor;
+
+    @Setter
+    @Column(nullable = false)
     private String ram;
 
+    @Setter
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Drive drive;
 
-    @OneToOne(mappedBy = "computer")
+    @Setter
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
-    public Computer (String manufacturer, String processor, String ram){
+    public Computer(String manufacturer, String processor, String ram, Drive drive) {
         this.manufacturer = manufacturer;
         this.processor = processor;
-        this. ram = ram;
+        this.ram = ram;
+        this.drive = drive;
     }
 }
